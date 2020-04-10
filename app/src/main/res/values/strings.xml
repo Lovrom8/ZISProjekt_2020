@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ZISProjekt</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="tab_text1">Karta</string>
+    <string name="tab_text2">Postavke</string>
+    <string name="btnSpremi_text">Spremi</string>
+    <string name="shared_perf_key">SHARED_PREF_KEY</string>
+    <string name="id_key">ID_KEY</string>
+    <string name="neuspjesno_citanje_baze">Neuspjesno citanje iz baze</string>
+</resources>

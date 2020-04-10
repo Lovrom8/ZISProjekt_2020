@@ -1,0 +1,2 @@
+rootProject.name='ZISProjekt'
+include ':app'

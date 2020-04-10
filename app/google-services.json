@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "875212511520",
+    "firebase_url": "https://zisprojekt.firebaseio.com",
+    "project_id": "zisprojekt",
+    "storage_bucket": "zisprojekt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875212511520:android:9bf987497d29470dc2df45",
+        "android_client_info": {
+          "package_name": "com.foi_bois.zisprojekt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875212511520-bnh6ukgkrhg5vjddk7ejdmc2so9ncptv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foi_bois.zisprojekt",
+            "certificate_hash": "6c80bd8b5185256eab4f946da2dc1091177124e2"
+          }
+        },
+        {
+          "client_id": "875212511520-uqgna169v5v7u0e93q8ntg100u1fgg3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhb3zT80GqV2CTjeLalNraBaAngxbGtl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875212511520-uqgna169v5v7u0e93q8ntg100u1fgg3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
