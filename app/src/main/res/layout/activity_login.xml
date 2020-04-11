@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/login_pozadina" >
+
+   <LinearLayout
+       android:id="@+id/layoutLogin"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+       android:orientation="vertical"
+       >
+
+       <TextView
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:padding="10dp"
+           android:text="@string/txtLogin_text"
+           android:textColor="@color/sivo_malo"
+           android:textSize="25sp"
+           android:textStyle="bold" />
+
+       <EditText
+           android:id="@+id/editEmail"
+           android:singleLine="true"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dp"
+           android:background="@android:color/transparent"
+
+           android:drawablePadding="8dp"
+           android:gravity="center_vertical"
+           android:hint="@string/editEmail_txt"
+           android:inputType="textEmailAddress"
+           android:padding="10dp"
+           android:textColor="@color/bijela"
+           android:textColorHint="@color/bijela"
+           android:textSize="16sp" />
+        <!-- android:drawableLeft="@drawable/email" -->
+
+
+       <View
+           android:layout_width="fill_parent"
+           android:layout_height="1px"
+           android:background="@color/sivo_malo" />
+
+
+       <EditText
+           android:id="@+id/editPassword"
+           android:singleLine="true"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:background="@android:color/transparent"
+           android:drawablePadding="8dp"
+           android:gravity="center_vertical"
+           android:hint="@string/editPass_text"
+           android:inputType="textPassword"
+           android:padding="10dp"
+           android:textColor="@color/bijela"
+           android:textColorHint="@color/bijela"
+           android:textSize="16sp"   />
+           <!-- android:drawableLeft="@drawable/password" -->
+
+       <LinearLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:paddingBottom="5dp"
+           android:paddingTop="8dp" >
+
+           <CheckBox
+               android:id="@+id/show_hide_password"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="@string/checkSakrijLozinku_text"
+               android:textColor="@color/bijela"
+               android:textSize="14sp" />
+
+           <TextView
+               android:id="@+id/forgot_password"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="end"
+               android:padding="5dp"
+               android:text="@string/zaboravljena_lozinka"
+               android:textColor="@color/bijela"
+               android:textSize="14sp" />
+       </LinearLayout>
+
+       <Button
+           android:id="@+id/btnLogin"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="3dp"
+           android:padding="3dp"
+           android:text="@string/btnLogin_text"
+           android:textColor="#009688"
+           android:textSize="17sp"
+           android:textStyle="bold" />
+       <!-- android:background="@drawable/loginbutton_selector" -->
+
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtNoviKorisnik_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/txtNoviKorisnik_text"
+        android:textColor="@color/bijela"
+        android:textSize="15sp" />
+
+</RelativeLayout>

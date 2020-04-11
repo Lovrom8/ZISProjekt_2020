@@ -4,7 +4,17 @@
     <string name="tab_text1">Karta</string>
     <string name="tab_text2">Postavke</string>
     <string name="btnSpremi_text">Spremi</string>
+    <string name="btnLogin_text">Ulogiraj se</string>
     <string name="shared_perf_key">SHARED_PREF_KEY</string>
     <string name="id_key">ID_KEY</string>
     <string name="neuspjesno_citanje_baze">Neuspjesno citanje iz baze</string>
+    <string name="uspjesno_brisanje_racuna">Vaš račun je izbrisan !:(</string>
+    <string name="neuspjeno_brisanje_racuna">Neuspjesno brisanje racuna</string>
+    <string name="checkSakrijLozinku_text">Sakrij lozinku</string>
+    <string name="txtLogin_text">Prijava</string>
+    <string name="editLogin_text">E-mail</string>
+    <string name="zaboravljena_lozinka">Zaboravljena lozinka</string>
+    <string name="editEmail_txt">Email</string>
+    <string name="txtNoviKorisnik_text">Novi korisnik? Registracija</string>
+    <string name="editPass_text">Lozinka</string>
 </resources>

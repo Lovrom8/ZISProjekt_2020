@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 class LokacTip extends HashMap<String, Double> {}
-//class LokacPar extends
+
 public class Baza  {
     private FirebaseDatabase DB;
     private DatabaseReference dbRef;
@@ -57,7 +58,7 @@ public class Baza  {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NotNull DatabaseError error) {
                 Log.w(TAG, Resources.getSystem().getString(R.string.neuspjesno_citanje_baze), error.toException());
             }
         });
