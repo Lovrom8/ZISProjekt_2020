@@ -1,4 +1,4 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.menu;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -10,12 +10,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.foi_bois.zisprojekt.firebase.Baza;
+import com.foi_bois.zisprojekt.R;
+import com.foi_bois.zisprojekt.lib.Helper;
+import com.foi_bois.zisprojekt.model.Lokacija;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -31,11 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
 import java.util.Map;
 
 public class TabMain extends Fragment implements OnMapReadyCallback {

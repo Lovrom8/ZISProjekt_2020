@@ -1,4 +1,4 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.menu;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -9,7 +9,7 @@ public class PageAdapter extends FragmentPagerAdapter{
     private int numOfTabs;
 
     public PageAdapter(FragmentManager fm, int numOfTabs){
-        super(fm);
+        super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.numOfTabs = numOfTabs;
     }
 

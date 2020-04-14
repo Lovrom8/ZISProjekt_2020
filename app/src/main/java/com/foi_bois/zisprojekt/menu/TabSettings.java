@@ -1,4 +1,4 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.menu;
 
 import android.os.Bundle;
 
@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.foi_bois.zisprojekt.firebase.Baza;
+import com.foi_bois.zisprojekt.R;
+import com.foi_bois.zisprojekt.model.Lokacija;
 
 public class TabSettings extends Fragment implements View.OnClickListener {
 
@@ -41,11 +43,6 @@ public class TabSettings extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v){
         Toast.makeText(getActivity(), "Isprobavamo bazu", Toast.LENGTH_SHORT).show();
-
-
-        //baza.OsvjeziMojuLokaciju(getContext(), lokacija);
-       // baza.IzbrisiLokaciju(Helper.id(getContext()));
-
 
         Lokacija lokacija = new Lokacija(Double.valueOf(tbLang.getText().toString()), Double.valueOf(tbLat.getText().toString()));
         //Lokacija lokacija = new Lokacija(49.9, 14.9);

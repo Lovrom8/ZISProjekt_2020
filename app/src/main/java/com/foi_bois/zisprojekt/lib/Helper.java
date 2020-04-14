@@ -1,9 +1,10 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.lib;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 
+import com.foi_bois.zisprojekt.R;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.UUID;

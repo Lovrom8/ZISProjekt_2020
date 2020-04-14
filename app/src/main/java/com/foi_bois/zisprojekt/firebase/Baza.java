@@ -1,4 +1,4 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.firebase;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,7 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.foi_bois.zisprojekt.R;
+import com.foi_bois.zisprojekt.lib.Helper;
+import com.foi_bois.zisprojekt.model.Lokacija;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,10 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class LokacTip extends HashMap<String, Double> {}
@@ -29,7 +28,7 @@ public class Baza  {
     private HashMap<String, Object> DBObj;
     public Map<String, Lokacija> lokacije;
 
-    Baza(){
+    public Baza(){
         lokacije = new HashMap<String, Lokacija>();
         DB = FirebaseDatabase.getInstance();
         dbRef = DB.getReference("lokacije"); //vazno jer je citanje asinkrono!

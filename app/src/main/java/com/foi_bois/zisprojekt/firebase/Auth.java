@@ -1,10 +1,11 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.firebase;
 
 import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.foi_bois.zisprojekt.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;

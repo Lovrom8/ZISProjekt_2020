@@ -5,52 +5,60 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 
-import com.foi_bois.zisprojekt.presenter.LoginActivityPresenter;
-import com.foi_bois.zisprojekt.repositories.UserRepository;
+import com.foi_bois.zisprojekt.auth.LoginPresenter;
+import com.foi_bois.zisprojekt.auth.LoginPresenterImpl;
+import com.foi_bois.zisprojekt.auth.ui.LoginView;
+import com.foi_bois.zisprojekt.model.User;
+import com.foi_bois.zisprojekt.auth.repo.UserRepository;
 
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginActivityPresenterTest {
     @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule(); //ako bude nam trebao neki drugi runner, a la Google SDK-a
+    public MockitoRule mockitoRule = MockitoJUnit.rule(); //ako nam bude trebao neki drugi runner, a la Google SDK-a
 
     @Mock
     UserRepository userRepository;
 
     @Mock
-    LoginActivityView view;
-    private LoginActivityPresenter presenter;
+    LoginView view;
+    private LoginPresenter presenter;
 
     @Before
     public void setUp() {
-        presenter = new LoginActivityPresenter(view, userRepository);
+        presenter = new LoginPresenterImpl(view, userRepository);
     }
 
-    @Test
-    public void shouldPassUserToView() {
+    @Test public void shouldPassUserToView() {
         //given
         User currUser = new User("123", "234");
         when(userRepository.getCurrentUser()).thenReturn(currUser);
 
         //when
-        presenter.getCurrentUser();
+        presenter.validateLogin();
 
         //then
         verify(view).greetUser(currUser);
     }
 
-    @Test
-    public void shouldHandleWrongPassword(){
+    @Test public void shouldHandleWrongPassword() {
         when(userRepository.getCurrentUser()).thenReturn(null);
 
-        presenter.getCurrentUser();
+        presenter.validateLogin();
 
         verify(view).displayWrongPasswordError(null);
+    }
+
+    @Test public void shouldHandleError(){ //ako se pojavi iznimka, test provjerava zove li se u tom slucaju displayError()
+        when(userRepository.getCurrentUser()).thenThrow(new RuntimeException("explosion"));
+
+        presenter.validateLogin();
+
+        verify(view).displayError();
     }
 }

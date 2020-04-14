@@ -27,7 +27,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.foi_bois.zisprojekt.LoginActivity"
+            android:name="com.foi_bois.zisprojekt.auth.ui.LoginActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,8 +36,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.foi_bois.zisprojekt.MainActivity" />
-        <activity android:name="com.foi_bois.zisprojekt.SignupActivity" />
+        <activity android:name="com.foi_bois.zisprojekt.menu.MainActivity" />
 
     </application>
 

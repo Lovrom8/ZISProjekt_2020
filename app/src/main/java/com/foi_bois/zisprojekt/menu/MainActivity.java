@@ -1,15 +1,15 @@
-package com.foi_bois.zisprojekt;
+package com.foi_bois.zisprojekt.menu;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.util.Log;
 
+import com.foi_bois.zisprojekt.R;
+import com.foi_bois.zisprojekt.menu.PageAdapter;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends FragmentActivity {
     private TabLayout tabLayout;
