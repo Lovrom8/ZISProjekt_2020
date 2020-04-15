@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.lib.Helper;
 import com.foi_bois.zisprojekt.model.Lokacija;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,18 +22,36 @@ import java.util.Map;
 
 class LokacTip extends HashMap<String, Double> {}
 
-public class Baza  {
+public class BazaHelper  {
     private FirebaseDatabase DB;
+    private FirebaseAuth auth;
     private DatabaseReference dbRef;
     private static final String TAG = "Baza";
     private HashMap<String, Object> DBObj;
     public Map<String, Lokacija> lokacije;
 
-    public Baza(){
+    private static class SingletonHolder { //bazu bismo načelno trebali instancirati samo jednom, pa je singleton super tu
+        private static final BazaHelper INSTANCE = new BazaHelper();
+    }
+
+    public static BazaHelper getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+
+    public FirebaseAuth getAuth(){
+        return FirebaseAuth.getInstance();
+    }
+
+    public BazaHelper(){
         lokacije = new HashMap<String, Lokacija>();
         DB = FirebaseDatabase.getInstance();
-        dbRef = DB.getReference("lokacije"); //vazno jer je citanje asinkrono!
+        auth = getAuth();
+        dbRef = DB.getReference("lokacije");
     }
+
+
+
+    //TODO: prebaci ostalo
 
     public interface FirebaseCallback {
         void onCallback(Map<String, Lokacija> lokacije);

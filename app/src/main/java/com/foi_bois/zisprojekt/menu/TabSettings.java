@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.foi_bois.zisprojekt.firebase.Baza;
+import com.foi_bois.zisprojekt.firebase.BazaHelper;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.model.Lokacija;
 
@@ -22,7 +22,7 @@ public class TabSettings extends Fragment implements View.OnClickListener {
     private Button btnSpremi;
     private EditText tbLang;
     private EditText tbLat;
-    private Baza baza;
+    private BazaHelper baza;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +35,7 @@ public class TabSettings extends Fragment implements View.OnClickListener {
         tbLang = (EditText)view.findViewById(R.id.tbLang);
         tbLat = (EditText)view.findViewById(R.id.tbLat);
 
-        baza = new Baza();
+        baza = new BazaHelper();
 
         return view;
     }

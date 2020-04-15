@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.foi_bois.zisprojekt.firebase.Baza;
+import com.foi_bois.zisprojekt.firebase.BazaHelper;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.lib.Helper;
 import com.foi_bois.zisprojekt.model.Lokacija;
@@ -42,7 +42,7 @@ public class TabMain extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Marker mojaPozicija, testMark1, testMark2;
     private LocationRequest mLocationRequest;
-    private Baza baza;
+    private BazaHelper baza;
 
     private long INTERVAL = 10 * 1000;
     private long NAJBRZI_INTERVAL = 10 * 1000;
@@ -64,7 +64,7 @@ public class TabMain extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        baza = new Baza();
+        baza = new BazaHelper();
    /*
      mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mFusedLocationProviderClient.getLastLocation()
@@ -117,7 +117,7 @@ public class TabMain extends Fragment implements OnMapReadyCallback {
     private void ucitajDrugePozicije(){
         mMap.clear(); //optimizacija lvl 100 :)
 
-        baza.procitajPodatke(new Baza.FirebaseCallback() {
+        baza.procitajPodatke(new BazaHelper.FirebaseCallback() {
             @Override
             public void onCallback( Map<String, Lokacija> lokacije) {
                 String mojId = Helper.id(getActivity());

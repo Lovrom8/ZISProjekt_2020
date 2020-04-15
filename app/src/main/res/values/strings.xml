@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ZISProjekt</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">ZIS pokazivatelj lokacije</string>
     <string name="tab_text1">Karta</string>
     <string name="tab_text2">Postavke</string>
     <string name="btnSpremi_text">Spremi</string>

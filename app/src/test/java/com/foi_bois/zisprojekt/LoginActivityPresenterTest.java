@@ -13,7 +13,6 @@ import com.foi_bois.zisprojekt.auth.LoginPresenter;
 import com.foi_bois.zisprojekt.auth.LoginPresenterImpl;
 import com.foi_bois.zisprojekt.auth.ui.LoginView;
 import com.foi_bois.zisprojekt.model.User;
-import com.foi_bois.zisprojekt.auth.repo.UserRepository;
 
 import static org.mockito.Mockito.*;
 
@@ -21,9 +20,6 @@ import static org.mockito.Mockito.*;
 public class LoginActivityPresenterTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule(); //ako nam bude trebao neki drugi runner, a la Google SDK-a
-
-    @Mock
-    UserRepository userRepository;
 
     @Mock
     LoginView view;
@@ -40,7 +36,7 @@ public class LoginActivityPresenterTest {
         when(userRepository.getCurrentUser()).thenReturn(currUser);
 
         //when
-        presenter.validateLogin();
+        presenter.validateUser();
 
         //then
         verify(view).greetUser(currUser);
@@ -49,7 +45,7 @@ public class LoginActivityPresenterTest {
     @Test public void shouldHandleWrongPassword() {
         when(userRepository.getCurrentUser()).thenReturn(null);
 
-        presenter.validateLogin();
+        presenter.validateUser();
 
         verify(view).displayWrongPasswordError(null);
     }
@@ -57,7 +53,7 @@ public class LoginActivityPresenterTest {
     @Test public void shouldHandleError(){ //ako se pojavi iznimka, test provjerava zove li se u tom slucaju displayError()
         when(userRepository.getCurrentUser()).thenThrow(new RuntimeException("explosion"));
 
-        presenter.validateLogin();
+        presenter.validateUser();
 
         verify(view).displayError();
     }
