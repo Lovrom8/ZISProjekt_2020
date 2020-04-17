@@ -23,7 +23,7 @@
            android:textStyle="bold" />
 
        <EditText
-           android:id="@+id/editEmail"
+           android:id="@+id/editLoginEmail"
            android:singleLine="true"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 
 
        <EditText
-           android:id="@+id/editPassword"
+           android:id="@+id/editLoginPassword"
            android:singleLine="true"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
    </LinearLayout>
 
     <TextView
-        android:id="@+id/txtNoviKorisnik_text"
+        android:id="@+id/txtSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutLogin"

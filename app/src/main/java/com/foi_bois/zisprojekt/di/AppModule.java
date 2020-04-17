@@ -12,7 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class AppModule {
+class AppModule { //svi koje bi treabli kao "globalno" i za sve third party
     @Provides
     Context provideContext(App application) {
         return application.getApplicationContext();

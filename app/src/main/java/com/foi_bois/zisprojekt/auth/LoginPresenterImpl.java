@@ -22,7 +22,8 @@ public class LoginPresenterImpl<V extends LoginView> extends CommonPresenter<V> 
         this.user = user.get();
     }
 
-    @Override public void logInWithEmailPass(String email, String password) {
+    @Override
+    public void logInWithEmailPass(String email, String password) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -37,11 +38,13 @@ public class LoginPresenterImpl<V extends LoginView> extends CommonPresenter<V> 
     }
 
 
-    @Override public void checkLogin(){ //ako je FB user null, onda nije ulogiran.. wowsies!
+    @Override
+    public void checkLogin(){ //ako je FB user null, onda nije ulogiran.. wowsies!
         getView().onCheckLogin(user != null);
     }
 
-    @Override public void logInAnon(){
+    @Override
+    public void logInAnon(){
         FirebaseAuth.getInstance().signInAnonymously()
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -55,7 +58,8 @@ public class LoginPresenterImpl<V extends LoginView> extends CommonPresenter<V> 
                 });
     }
 
-    @Override public void logInWithNumber(){
+    @Override
+    public void logInWithNumber(){
         //TODO:slozi ili makni
     }
 

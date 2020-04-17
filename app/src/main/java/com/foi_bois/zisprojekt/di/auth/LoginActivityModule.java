@@ -1,5 +1,7 @@
-package com.foi_bois.zisprojekt.auth;
+package com.foi_bois.zisprojekt.di.auth;
 
+import com.foi_bois.zisprojekt.auth.LoginPresenter;
+import com.foi_bois.zisprojekt.auth.LoginPresenterImpl;
 import com.foi_bois.zisprojekt.auth.ui.LoginView;
 
 import dagger.Binds;

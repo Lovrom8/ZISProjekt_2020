@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
@@ -7,4 +7,76 @@
     android:scrollbars="none"
     >
 
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/layoutLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        >
+
+    <EditText
+        android:id="@+id/editSignupEmail"
+        android:singleLine="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/editEmail_txt"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/bijela"
+        android:textColorHint="@color/bijela"
+        android:textSize="16sp" />
+    <!-- android:drawableLeft="@drawable/email" -->
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/sivo_malo" />
+
+
+    <EditText
+        android:id="@+id/editSignupPassword"
+        android:singleLine="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/editPass_text"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/bijela"
+        android:textColorHint="@color/bijela"
+        android:textSize="16sp"   />
+
+    <EditText
+        android:id="@+id/editConfirmPassword"
+        android:singleLine="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/editConfirmPass_text"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/bijela"
+        android:textColorHint="@color/bijela"
+        android:textSize="16sp"   />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/btnSignup"
+            android:text="@string/btnSignup_text"
+            >
+
+        </Button>
+    </LinearLayout>
+</RelativeLayout>

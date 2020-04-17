@@ -37,8 +37,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.foi_bois.zisprojekt.menu.MainActivity" />
+        <activity android:name="com.foi_bois.zisprojekt.main.MainActivity" />
+        <activity android:name="com.foi_bois.zisprojekt.auth.ui.SignupActivity" />
 
+        <activity android:name="com.foi_bois.zisprojekt.main.map.ui.LokacijeFragment" />
     </application>
 
 </manifest>

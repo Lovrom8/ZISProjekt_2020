@@ -18,4 +18,6 @@
     <string name="editEmail_txt">Email</string>
     <string name="txtNoviKorisnik_text">Novi korisnik? Registracija</string>
     <string name="editPass_text">Lozinka</string>
+    <string name="editConfirmPass_text">Potvrdi lozinku</string>
+    <string name="btnSignup_text">Registriraj se</string>
 </resources>

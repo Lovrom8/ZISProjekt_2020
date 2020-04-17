@@ -13,7 +13,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules =
         {AndroidSupportInjectionModule.class,
         ActivityBindingModule.class,
-        AppModule.class}) //TU IDU SVI FRAGMENTI I TO koji se povezuju
+        FragmentBindingModule.class,
+        AppModule.class})
 
 public interface AppComponent extends AndroidInjector<App> {
     void inject(App application);

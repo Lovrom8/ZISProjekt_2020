@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
-
-import com.foi_bois.zisprojekt.menu.MainActivity;
+import com.foi_bois.zisprojekt.main.MainActivity;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.auth.LoginPresenter;
-import com.foi_bois.zisprojekt.auth.LoginPresenterImpl;
 import com.foi_bois.zisprojekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,9 +30,12 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
     private Button btnLogin;
     private EditText tbUsername;
     private EditText tbPass;
+    private TextView tvSignup;
+
     private final String TAG = LoginActivity.class.getSimpleName();
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -46,16 +47,29 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
             }
         });
 
-        tbUsername = (EditText)findViewById(R.id.editEmail);
-        tbPass = (EditText)findViewById(R.id.editPassword);
+        tvSignup = (TextView)findViewById(R.id.txtSignup);
+        tvSignup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onSignupClick(v);
+            }
+        });
+
+        tbUsername = (EditText)findViewById(R.id.editLoginEmail);
+        tbPass = (EditText)findViewById(R.id.editLoginPassword);
 
         presenter.attach(this);
         presenter.checkLogin();
     }
 
-    @Override protected void onDestroy(){
+    @Override
+    protected void onDestroy(){
         presenter.detach();
         super.onDestroy();
+    }
+
+    public void onSignupClick(View v){
+        startActivity(new Intent(this, SignupActivity.class));
     }
 
     public void onLoginClick(View v){
@@ -67,18 +81,21 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
         }
 
         presenter.logInWithEmailPass(email, pass);
-       // startActivity(new Intent(v.getContext(), MainActivity.class));
     }
 
-    @Override public void onCheckLogin(boolean isLoggedIn){
+    @Override
+    public void onCheckLogin(boolean isLoggedIn){
         if(isLoggedIn)
             Toast.makeText(this, "Vec ste prijavljeni!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override public void onLoginResult(boolean isSuccess, FirebaseUser user) {
+    @Override
+    public void onLoginResult(boolean isSuccess, FirebaseUser user) {
         //TODO: promjeni u neku bolji pozdravn
-        if(isSuccess)
+        if(isSuccess){
             Toast.makeText(this, "Dobrodosli " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+        }
         else
             Toast.makeText(this, "Pepehands", Toast.LENGTH_SHORT).show();
     }

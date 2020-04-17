@@ -1,4 +1,4 @@
-package com.foi_bois.zisprojekt.menu;
+package com.foi_bois.zisprojekt.main;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -7,7 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.foi_bois.zisprojekt.R;
-import com.foi_bois.zisprojekt.menu.PageAdapter;
+import com.foi_bois.zisprojekt.main.PageAdapter;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
