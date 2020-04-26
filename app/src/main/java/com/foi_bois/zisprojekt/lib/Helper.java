@@ -3,14 +3,18 @@ package com.foi_bois.zisprojekt.lib;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.util.Patterns;
+
+import androidx.core.util.Pair;
 
 import com.foi_bois.zisprojekt.R;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class Helper {
-    public static float izracunajUdaljenost(Marker A, Marker B){
+    public static float calculateDistance(Marker A, Marker B){
         if(A == null || B == null) //JIC
             return -1.0f;
 
@@ -21,10 +25,10 @@ public class Helper {
         return udaljenost[0] / 1000; //pretvori u km
     }
 
+    /* NADALJE STARO */
 
     private static String sID = null;
     private final static String ID_KEY = "ID_KEY";
-
     public synchronized static String id(Context context) {
         if (sID == null) {
             SharedPreferences pref = context.getSharedPreferences(

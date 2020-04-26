@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3200FE</color>
-    <color name="colorPrimaryDark">#4700B3</color>
+    <color name="colorPrimary">#D39611</color>
+    <color name="colorPrimaryDark">#D39611</color>
     <color name="colorAccent">#03DAD6</color>
 
-    <color name="crna">#FFFFFF</color>
-    <color name="bijela">#000000</color>
+    <color name="crna">#000000</color>
+    <color name="bijela">#FFFFFF</color>
     <color name="sivo_malo">#EEEEEE</color>
-    <color name="login_pozadina">#129688</color>
+    <color name="login_pozadina">#F39611</color>
+    <color name="button_selectorcolor">#9E9E9E</color>
+
 </resources>

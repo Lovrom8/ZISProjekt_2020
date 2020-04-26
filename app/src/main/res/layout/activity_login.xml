@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/login_pozadina" >
+    android:padding="20dp"
+    android:background="@color/login_pozadina">
 
    <LinearLayout
        android:id="@+id/layoutLogin"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:layout_centerInParent="true"
-       android:orientation="vertical"
-       >
+       android:orientation="vertical" >
 
        <TextView
            android:layout_width="fill_parent"
@@ -29,23 +29,20 @@
            android:layout_height="wrap_content"
            android:layout_marginTop="20dp"
            android:background="@android:color/transparent"
-
-           android:drawablePadding="8dp"
            android:gravity="center_vertical"
-           android:hint="@string/editEmail_txt"
+           android:hint="@string/editEmail_text"
            android:inputType="textEmailAddress"
            android:padding="10dp"
            android:textColor="@color/bijela"
            android:textColorHint="@color/bijela"
-           android:textSize="16sp" />
-        <!-- android:drawableLeft="@drawable/email" -->
-
+           android:textSize="16sp"
+           android:drawablePadding="8dp"
+           android:drawableLeft="@drawable/icon_email" />
 
        <View
            android:layout_width="fill_parent"
-           android:layout_height="1px"
+           android:layout_height="3dp"
            android:background="@color/sivo_malo" />
-
 
        <EditText
            android:id="@+id/editLoginPassword"
@@ -53,15 +50,15 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:background="@android:color/transparent"
-           android:drawablePadding="8dp"
            android:gravity="center_vertical"
            android:hint="@string/editPass_text"
            android:inputType="textPassword"
            android:padding="10dp"
            android:textColor="@color/bijela"
            android:textColorHint="@color/bijela"
-           android:textSize="16sp"   />
-           <!-- android:drawableLeft="@drawable/password" -->
+           android:textSize="16sp"
+           android:drawablePadding="8dp"
+           android:drawableLeft="@drawable/icon_pass" />
 
        <LinearLayout
            android:layout_width="fill_parent"
@@ -71,11 +68,24 @@
            android:paddingTop="8dp" >
 
            <CheckBox
-               android:id="@+id/show_hide_password"
+               android:id="@+id/checkShowHidePassword"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_weight="1"
+               android:checked="true"
+               app:buttonTint="@color/colorPrimaryDark"
                android:text="@string/checkSakrijLozinku_text"
+               android:textColor="@color/bijela"
+               android:textSize="14sp" />
+
+           <CheckBox
+               android:id="@+id/checkRememberMe"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:checked="false"
+               app:buttonTint="@color/colorPrimaryDark"
+               android:text="@string/checkRememberMe_text"
                android:textColor="@color/bijela"
                android:textSize="14sp" />
 
@@ -98,24 +108,40 @@
            android:layout_marginTop="3dp"
            android:padding="3dp"
            android:text="@string/btnLogin_text"
-           android:textColor="#009688"
+           android:textColor="@color/colorPrimaryDark"
            android:textSize="17sp"
-           android:textStyle="bold" />
-       <!-- android:background="@drawable/loginbutton_selector" -->
-
+           android:textStyle="bold"
+           android:background="@drawable/btn_selector" />
    </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtSignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="@string/txtNoviKorisnik_text"
-        android:textColor="@color/bijela"
-        android:textSize="15sp" />
+        <TextView
+            android:id="@+id/txtSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/txtNoviKorisnik_text"
+            android:textColor="@color/bijela"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/txtAnonLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtSignup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/txtAnonLogin_text"
+            android:textColor="@color/bijela"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            />
 
 </RelativeLayout>

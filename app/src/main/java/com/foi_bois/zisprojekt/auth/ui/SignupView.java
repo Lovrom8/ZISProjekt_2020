@@ -6,5 +6,5 @@ import com.google.firebase.auth.FirebaseUser;
 public interface SignupView extends BaseView {
     void onPasswordTooShort();
     void onSignupResult(int signupResult, FirebaseUser user);
-    //void
+    void onConvertUser(int conversionResult, FirebaseUser user);
 }

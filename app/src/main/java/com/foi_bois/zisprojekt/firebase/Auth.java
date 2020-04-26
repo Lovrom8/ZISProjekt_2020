@@ -17,7 +17,7 @@ public class Auth {
     private static FirebaseUser currUser;
     private static AuthCredential creds;
 
-    public static void izbrisiRacun(final Context ctx){
+    public static void removeAcct(final Context ctx){
         currUser.reauthenticate(creds).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -37,7 +37,7 @@ public class Auth {
         });
     }
 
-    public static void odlogirajSe(Context ctx){
+    public static void logOut(Context ctx){
         mAuth.signOut();
     }
 }

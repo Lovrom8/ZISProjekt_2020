@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/login_pozadina"
     tools:context=".main.MainActivity">
-    <TableLayout  android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvSettingsUsername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/layoutLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:maxHeight="150dp"
+            android:maxWidth="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:background="@color/sivo_malo" />
 
         <Button
-            android:id="@+id/btnSpremi"
-            android:layout_width="426dp"
-            android:layout_height="172dp"
-            android:text="@string/btnSpremi_text" />
+            android:layout_marginTop="15dp"
+            android:id="@+id/btnSave"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/btnSpremi_text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-        <EditText android:id="@+id/tbLang">
+        <EditText
+            android:id="@+id/editSettingsUsername"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:textColor="@color/bijela"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:text="@string/editUsername_text"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            />
 
-        </EditText>
-        <EditText android:id="@+id/tbLat">
+        <EditText
+            android:id="@+id/editSettingsEmail"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:textColor="@color/bijela"
+            android:inputType="textEmailAddress"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:text="@string/editEmail_text"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            />
 
-        </EditText>
-    </TableLayout>
-
-
-</FrameLayout>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/btnLogout"
+            android:text="@string/btnLogout_text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>
 

@@ -3,9 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:overScrollMode="never"
-    android:scrollbars="none"
-    >
+    android:padding="20dp"
+    android:background="@color/login_pozadina">
 
     <LinearLayout
         android:id="@+id/layoutLogin"
@@ -15,68 +14,116 @@
         android:orientation="vertical"
         >
 
-    <EditText
-        android:id="@+id/editSignupEmail"
-        android:singleLine="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/txtSignup_text"
+            android:textColor="@color/sivo_malo"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/editEmail_txt"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:textColor="@color/bijela"
-        android:textColorHint="@color/bijela"
-        android:textSize="16sp" />
-    <!-- android:drawableLeft="@drawable/email" -->
+        <EditText
+            android:id="@+id/editUsername"
+            android:singleLine="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/editUsername_text"
+            android:padding="10dp"
+            android:textColor="@color/bijela"
+            android:textColorHint="@color/bijela"
+            android:textSize="16sp"   />
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/sivo_malo" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@color/sivo_malo" />
+        <EditText
+            android:id="@+id/editSignupEmail"
+            android:singleLine="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/editEmail_text"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textColor="@color/bijela"
+            android:textColorHint="@color/bijela"
+            android:textSize="16sp" />
+        <!-- android:drawableLeft="@drawable/icon_email" -->
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/sivo_malo" />
 
-    <EditText
-        android:id="@+id/editSignupPassword"
-        android:singleLine="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/editPass_text"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="@color/bijela"
-        android:textColorHint="@color/bijela"
-        android:textSize="16sp"   />
+        <EditText
+            android:id="@+id/editSignupPassword"
+            android:singleLine="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/editPass_text"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/bijela"
+            android:textColorHint="@color/bijela"
+            android:textSize="16sp"   />
 
-    <EditText
-        android:id="@+id/editConfirmPassword"
-        android:singleLine="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/editConfirmPass_text"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="@color/bijela"
-        android:textColorHint="@color/bijela"
-        android:textSize="16sp"   />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/sivo_malo" />
+
+        <EditText
+            android:id="@+id/editConfirmPassword"
+            android:singleLine="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/editConfirmPass_text"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/bijela"
+            android:textColorHint="@color/bijela"
+            android:textSize="16sp"   />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/sivo_malo" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/btnSignup"
             android:text="@string/btnSignup_text"
-            >
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-        </Button>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/btnConvertAnon"
+            android:text="@string/btnConvertAnon_text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
     </LinearLayout>
 </RelativeLayout>

@@ -3,19 +3,24 @@ package com.foi_bois.zisprojekt.auth.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.util.Pair;
+
+import com.foi_bois.zisprojekt.lib.AuthHelper;
 import com.foi_bois.zisprojekt.main.MainActivity;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.auth.LoginPresenter;
-import com.foi_bois.zisprojekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sdsmdg.tastytoast.TastyToast;
+
 import javax.inject.Inject;
 import dagger.Lazy;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -31,6 +36,9 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
     private EditText tbUsername;
     private EditText tbPass;
     private TextView tvSignup;
+    private TextView tvAnonLogin;
+    private CheckBox checkShowHidePass;
+    private CheckBox checkRememberMe;
 
     private final String TAG = LoginActivity.class.getSimpleName();
 
@@ -38,6 +46,8 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        checkIfRememberMeEnabled(); //TODO: mozda napraviti nekakav intro screen da se uopće ne vidi ovaj ak već postoje credsi
 
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener( new View.OnClickListener(){
@@ -54,12 +64,35 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
                 onSignupClick(v);
             }
         });
+        tvAnonLogin = (TextView)findViewById(R.id.txtAnonLogin);
+        tvAnonLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onAnonLoginClick(v);
+            }
+        });
 
         tbUsername = (EditText)findViewById(R.id.editLoginEmail);
         tbPass = (EditText)findViewById(R.id.editLoginPassword);
 
+        checkShowHidePass = (CheckBox)findViewById(R.id.checkShowHidePassword);
+        checkShowHidePass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onCheckShowPassClicked(v);
+            }
+        });
+
+        checkRememberMe = (CheckBox)findViewById(R.id.checkRememberMe);
+        checkRememberMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCheckRememberMeClicked();
+            }
+        });
+
         presenter.attach(this);
-        presenter.checkLogin();
+        //presenter.checkLogin();
     }
 
     @Override
@@ -76,51 +109,61 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
         String email = tbUsername.getText().toString();
         String pass = tbPass.getText().toString();
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-            Toast.makeText(this, "Not Valid!", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, getResources().getString(R.string.login_missing), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
             return;
         }
 
         presenter.logInWithEmailPass(email, pass);
     }
 
+    public void onAnonLoginClick(View v) {
+        presenter.logInAnon();
+    }
+
     @Override
     public void onCheckLogin(boolean isLoggedIn){
         if(isLoggedIn)
-            Toast.makeText(this, "Vec ste prijavljeni!", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, getResources().getString(R.string.login_already_logged), Toast.LENGTH_SHORT, TastyToast.INFO).show();
     }
 
     @Override
     public void onLoginResult(boolean isSuccess, FirebaseUser user) {
-        //TODO: promjeni u neku bolji pozdravn
         if(isSuccess){
-            Toast.makeText(this, "Dobrodosli " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, getResources().getString(R.string.login_success) + user.getEmail(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
             startActivity(new Intent(this, MainActivity.class));
         }
         else
-            Toast.makeText(this, "Pepehands", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override public void greetUser(User currentUser) {
-        //TODO: promjeni zaslon
-        Log.d(TAG, "greeting user: " + currentUser.getId());
-    }
-
-    @Override public void displayWrongPasswordError(User currentUser) {
-        //TODO: pokazi nesto korisno
-        Log.d(TAG, "kriva sifra brt: ");
-    }
-
-    @Override public void displayError(){
-        Toast.makeText(this, "Neuspjesno dohvacanje podataka...", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this, getResources().getString(R.string.login_failed), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
     }
 
     @Override
-    public void showLoading() {
-        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
+    public void onAnonLoginResult(boolean isSuccess, FirebaseUser user) {
+        if(isSuccess) {
+            TastyToast.makeText(this, getResources().getString(R.string.login_anon_success), Toast.LENGTH_SHORT, TastyToast.INFO).show();
+            startActivity(new Intent(this, MainActivity.class));
+        }
+        else
+            TastyToast.makeText(this, getResources().getString(R.string.login_anon_failed), Toast.LENGTH_SHORT, TastyToast.ERROR).show();
     }
 
-    @Override
-    public void hideLoading() {
-        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+    private void onCheckShowPassClicked(View v){
+        if(checkShowHidePass.isChecked())
+            tbPass.setTransformationMethod(new PasswordTransformationMethod());
+        else
+            tbPass.setTransformationMethod(null);
+    }
+
+    private void onCheckRememberMeClicked(){
+        if(checkRememberMe.isChecked())
+           AuthHelper.saveLoginCredsToPerfs(getApplicationContext(), tbUsername.getText().toString(), tbPass.getText().toString());
+        else
+            AuthHelper.removeSavedLoginCreds(getApplicationContext());
+    }
+
+    private void checkIfRememberMeEnabled(){
+        if(AuthHelper.isRememberMeChecked(getApplicationContext())){
+            Pair<String, String> creds = AuthHelper.getSavedLoginCreds(getApplicationContext());
+            presenter.logInWithEmailPass(creds.first, creds.second);
+        }
     }
 }

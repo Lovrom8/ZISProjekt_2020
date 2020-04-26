@@ -1,6 +1,6 @@
 package com.foi_bois.zisprojekt.base;
 
 public interface BaseView {
-    void showLoading();
-    void hideLoading();
+    //void showLoading(); //recimo da imamo tranzicije (:
+    //void hideLoading();
 }
