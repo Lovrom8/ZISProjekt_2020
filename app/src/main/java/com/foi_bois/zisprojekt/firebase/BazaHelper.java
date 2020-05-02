@@ -1,16 +1,14 @@
 package com.foi_bois.zisprojekt.firebase;
 
-import android.content.Context;
 import android.content.res.Resources;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.lib.Constants;
-import com.foi_bois.zisprojekt.lib.Helper;
 import com.foi_bois.zisprojekt.model.Location;
 import com.foi_bois.zisprojekt.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,10 +26,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class LokacTip extends HashMap<String, Double> {}
@@ -67,6 +64,7 @@ public class BazaHelper  {
     }
 
     public interface FirebaseUserCallback{ void onCallback(boolean isSuccesful); }
+    public interface FirebaseAllUserCallback { void onCallback(HashMap<String, User> users); }
     public interface FirebaseUserLoadCallback {  void onCallback(boolean isSuccessful, User userData); }
 
     public void addNewUserCustomData(FirebaseUser user, User customData, final FirebaseUserCallback callback){
@@ -104,6 +102,30 @@ public class BazaHelper  {
                 });
     }
 
+    public void setUsernameForUser(FirebaseUser user, String newUsername, final FirebaseUserCallback callback){
+        dbUserRef.child(user.getUid()).child("username").setValue(newUsername)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        callback.onCallback(task.isSuccessful());
+                    }
+                });
+    }
+
+    public void refreshMyLocation(Location location, final FirebaseUserCallback callback){
+        refreshLocationForUser(FirebaseAuth.getInstance().getCurrentUser(), location, callback);
+    }
+
+    public void refreshLocationForUser(FirebaseUser user, Location location, final FirebaseUserCallback callback){
+        dbUserRef.child(user.getUid()).child("location").setValue(location)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        callback.onCallback(task.isSuccessful());
+                    }
+                });
+    }
+
     public interface FirebaseUploadCallback{
         void onCallback(boolean isSuccessful, String avatarUrl);
     }
@@ -129,16 +151,40 @@ public class BazaHelper  {
         });
     }
 
-    public void addDefaultFieldsForUser(final FirebaseUser user){
-        User customFields = new User(Constants.DEFAULT_AVATAR_URL, new Location(0.0, 0.0), 0); //locationUpdated 0 znaci da bude postavlejno na 1.1.1970 ilitiga sigurno prije "izlaska" aplikacije (:
+    public void addDefaultFieldsForUser(final FirebaseUser user, @Nullable String username){
+        User customFields = new User(username, Constants.DEFAULT_AVATAR_URL, new Location(0.0, 0.0), 0); //locationUpdated 0 znaci da bude postavlejno na 1.1.1970 ilitiga sigurno prije "izlaska" aplikacije (:
         dbUserRef.child(user.getUid()).setValue(customFields).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Log.d("BAZA", "Uspjesno spremljeno u bazu");
+                    Log.d("BAZA",  Resources.getSystem().getString(R.string.log_savedInDBSuccess));
                 }else{
-                    Log.d("BAZA", "Problem sa spremanjem fieldova u DB za UID: " + user.getUid());
+                    Log.d("BAZA", Resources.getSystem().getString(R.string.log_savedInDBSuccess) + " for UID: " + user.getUid());
                 }
+            }
+        });
+    }
+
+    public void readAllUserData(final FirebaseAllUserCallback firebaseCallback){
+        dbUserRef.addValueEventListener(new ValueEventListener() {
+            HashMap<String, User> ret = new HashMap<String, User>();
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshotChild : dataSnapshot.getChildren()) {
+                    User userData = snapshotChild.getValue(User.class);
+                    ret.put(snapshotChild.getKey(), userData);
+                }
+
+                firebaseCallback.onCallback(ret);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, Resources.getSystem().getString(R.string.neuspjesno_citanje_baze), databaseError.toException());
+
+                firebaseCallback.onCallback(ret);
             }
         });
     }
@@ -149,7 +195,7 @@ public class BazaHelper  {
         void onCallback(Map<String, Location> lokacije);
     }
 
-    //TODO: ovo ne radi više jer nije više ista Location... :(
+    //TODO: glorious, al ne radi više jer nije ista Location... :(
     public void procitajPodatke(final FirebaseCallback firebaseCallback){
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -175,20 +221,7 @@ public class BazaHelper  {
         });
     }
 
-
-    public void osvjeziLokaciju(Context ctx, Location location, String id){
-        Map<String, Object> entry  = new HashMap<>();
-        entry.put(id, location);
-
-        dbRef.updateChildren(entry);
-    }
-
-    public void osvjeziMojuLokaciju(Context ctx, Location location){
-        String uniqueID = Helper.id(ctx);
-        osvjeziLokaciju(ctx, location, uniqueID);
-    }
-
-    public void izbrisiLokaciju(String id) {
+    public void removeLocation(String id) {
         dbRef.child(id).removeValue();
     }
 }

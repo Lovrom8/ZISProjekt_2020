@@ -58,4 +58,11 @@
     <string name="btnConvertAnon_text">Pretvori</string>
     <string name="btnLogout_text">Odjava</string>
 
+    <string name="log_savedInDBSuccess">Sucessfuly saved in DB</string>
+    <string name="log_savedInDBFail">Failed saving in DB</string>
+    <string name="log_locationSavingSuccess">Successfuly saved location</string>
+    <string name="log_locationSavingFail">Failed saving location</string>
+    <string name="log_imageDLError">Image download error</string>
+
+    <string name="toast_new_location">Nova trenutna lokacija</string>
 </resources>

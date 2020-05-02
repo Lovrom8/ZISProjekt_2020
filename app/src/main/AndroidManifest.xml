@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.foi_bois.zisprojekt">
 
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -41,7 +42,6 @@
         <activity android:name="com.foi_bois.zisprojekt.auth.ui.SignupActivity" />
 
         <activity android:name="com.foi_bois.zisprojekt.main.map.ui.LokacijeFragment" />
-        <service android:name="com.foi_bois.zisprojekt.lib.ImgDLService" />
     </application>
 
 </manifest>

@@ -4,10 +4,11 @@
     <color name="colorPrimaryDark">#D39611</color>
     <color name="colorAccent">#03DAD6</color>
 
-    <color name="crna">#000000</color>
-    <color name="bijela">#FFFFFF</color>
-    <color name="sivo_malo">#EEEEEE</color>
-    <color name="login_pozadina">#F39611</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_kinda_grey">#EEEEEE</color>
+    <color name="color_login_bgd">#F39611</color>
     <color name="button_selectorcolor">#9E9E9E</color>
+    <color name="color_redorange">#FF5349</color>
 
 </resources>

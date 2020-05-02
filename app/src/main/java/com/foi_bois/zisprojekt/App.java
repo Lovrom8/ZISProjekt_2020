@@ -15,7 +15,6 @@ public class App extends DaggerApplication implements HasSupportFragmentInjector
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentInjector;
 
-
     @Override protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         return DaggerAppComponent.builder().create(this);
     }

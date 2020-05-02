@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="20dp"
-    android:background="@color/login_pozadina">
+    android:background="@color/color_login_bgd">
 
    <LinearLayout
        android:id="@+id/layoutLogin"
@@ -18,7 +18,7 @@
            android:gravity="center"
            android:padding="10dp"
            android:text="@string/txtLogin_text"
-           android:textColor="@color/sivo_malo"
+           android:textColor="@color/color_kinda_grey"
            android:textSize="25sp"
            android:textStyle="bold" />
 
@@ -33,8 +33,8 @@
            android:hint="@string/editEmail_text"
            android:inputType="textEmailAddress"
            android:padding="10dp"
-           android:textColor="@color/bijela"
-           android:textColorHint="@color/bijela"
+           android:textColor="@color/color_white"
+           android:textColorHint="@color/color_white"
            android:textSize="16sp"
            android:drawablePadding="8dp"
            android:drawableLeft="@drawable/icon_email" />
@@ -42,7 +42,7 @@
        <View
            android:layout_width="fill_parent"
            android:layout_height="3dp"
-           android:background="@color/sivo_malo" />
+           android:background="@color/color_kinda_grey" />
 
        <EditText
            android:id="@+id/editLoginPassword"
@@ -54,8 +54,8 @@
            android:hint="@string/editPass_text"
            android:inputType="textPassword"
            android:padding="10dp"
-           android:textColor="@color/bijela"
-           android:textColorHint="@color/bijela"
+           android:textColor="@color/color_white"
+           android:textColorHint="@color/color_white"
            android:textSize="16sp"
            android:drawablePadding="8dp"
            android:drawableLeft="@drawable/icon_pass" />
@@ -75,7 +75,7 @@
                android:checked="true"
                app:buttonTint="@color/colorPrimaryDark"
                android:text="@string/checkSakrijLozinku_text"
-               android:textColor="@color/bijela"
+               android:textColor="@color/color_white"
                android:textSize="14sp" />
 
            <CheckBox
@@ -86,7 +86,7 @@
                android:checked="false"
                app:buttonTint="@color/colorPrimaryDark"
                android:text="@string/checkRememberMe_text"
-               android:textColor="@color/bijela"
+               android:textColor="@color/color_white"
                android:textSize="14sp" />
 
            <TextView
@@ -97,7 +97,7 @@
                android:gravity="end"
                android:padding="5dp"
                android:text="@string/zaboravljena_lozinka"
-               android:textColor="@color/bijela"
+               android:textColor="@color/color_white"
                android:textSize="14sp" />
        </LinearLayout>
 
@@ -124,7 +124,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/txtNoviKorisnik_text"
-            android:textColor="@color/bijela"
+            android:textColor="@color/color_white"
             android:textSize="15sp"
             android:layout_centerInParent="true"
             />
@@ -139,7 +139,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/txtAnonLogin_text"
-            android:textColor="@color/bijela"
+            android:textColor="@color/color_white"
             android:textSize="15sp"
             android:layout_centerInParent="true"
             />

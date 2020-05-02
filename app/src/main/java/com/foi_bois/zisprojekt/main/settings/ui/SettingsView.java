@@ -5,5 +5,6 @@ import com.foi_bois.zisprojekt.base.BaseView;
 public interface SettingsView extends BaseView {
     void checkFilePerms();
     void onAvatarUpload(boolean isSuccessful);
+    void onSettingsChanged(boolean isSucessful);
 }
 

@@ -1,6 +1,7 @@
 package com.foi_bois.zisprojekt.model;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.Exclude;
 
 public class Location {
     private double lat;
@@ -34,6 +35,9 @@ public class Location {
     public void setLat(double lat) {
         this.lat = lat;
     }
+
+    @Exclude
+    public LatLng getLatLng(){ return new LatLng(lat, lng); }
 }
 
 

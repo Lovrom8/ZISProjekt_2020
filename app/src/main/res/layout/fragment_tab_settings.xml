@@ -4,17 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@color/login_pozadina"
+    android:background="@color/color_login_bgd"
     tools:context=".main.MainActivity">
-
-    <TextView
-        android:id="@+id/tvSettingsUsername"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="25sp"
-        />
 
     <LinearLayout
         android:id="@+id/layoutLogin"
@@ -23,11 +14,20 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvSettingsUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="25sp"
+            />
+
         <ImageView
             android:id="@+id/ivAvatar"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:maxHeight="150dp"
             android:maxWidth="150dp"
@@ -37,7 +37,48 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dp"
-            android:background="@color/sivo_malo" />
+            android:background="@color/color_kinda_grey" />
+
+        <EditText
+            android:id="@+id/editSettingsUsername"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:hint="@string/editUsername_text"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/color_white"
+            android:textColorHint="@color/color_white"
+            />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_kinda_grey" />
+
+        <EditText
+            android:id="@+id/editSettingsEmail"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:textColor="@color/color_white"
+            android:textColorHint="@color/color_white"
+            android:background="@android:color/transparent"
+            android:inputType="textEmailAddress"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:hint="@string/editEmail_text"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_kinda_grey" />
 
         <Button
             android:layout_marginTop="15dp"
@@ -49,37 +90,12 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editSettingsUsername"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
-            android:textColor="@color/bijela"
-            android:textSize="15sp"
-            android:padding="5dp"
-            android:text="@string/editUsername_text"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            />
-
-        <EditText
-            android:id="@+id/editSettingsEmail"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
-            android:textColor="@color/bijela"
-            android:inputType="textEmailAddress"
-            android:textSize="15sp"
-            android:padding="5dp"
-            android:text="@string/editEmail_text"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            />
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/btnLogout"
             android:text="@string/btnLogout_text"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/color_redorange"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>

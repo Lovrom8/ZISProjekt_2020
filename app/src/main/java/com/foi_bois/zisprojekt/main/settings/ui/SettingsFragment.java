@@ -16,27 +16,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.auth.ui.LoginActivity;
 import com.foi_bois.zisprojekt.base.BaseFragment;
-import com.foi_bois.zisprojekt.firebase.Auth;
 import com.foi_bois.zisprojekt.firebase.BazaHelper;
 import com.foi_bois.zisprojekt.lib.AuthHelper;
+import com.foi_bois.zisprojekt.lib.Constants;
 import com.foi_bois.zisprojekt.lib.DownloadImageTask;
-import com.foi_bois.zisprojekt.lib.ImgHelper;
+import com.foi_bois.zisprojekt.lib.GlideApp;
 import com.foi_bois.zisprojekt.lib.PermsHelper;
-import com.foi_bois.zisprojekt.main.MainActivity;
 import com.foi_bois.zisprojekt.main.settings.SettingsPresenter;
-import com.foi_bois.zisprojekt.model.Location;
 import com.foi_bois.zisprojekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sdsmdg.tastytoast.TastyToast;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -46,12 +46,12 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
 
     public SettingsFragment() { }
 
+    private final String TAG = "Settings";
     private Button btnSave;
     private Button btnLogout;
     private TextView tvUsername;
     private EditText tbUsername;
     private EditText tbEmail;
-    private BazaHelper baza;
     private ImageView ivAvatar;
     private FirebaseUser currentUser;
 
@@ -100,26 +100,35 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         super.onDestroy();
     }
 
+    private void setTextViews(){
+        tbEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        tvUsername.setText(tbUsername.getText());
+    }
+
     private void loadCurrentSettings() {
-        tvUsername.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        tbUsername.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        setTextViews();
 
         BazaHelper.getInstance().getCustomDataForUser(currentUser, new BazaHelper.FirebaseUserLoadCallback() {
             @Override
             public void onCallback(boolean isSuccessful, User userData) {
-                if(userData.getAvatar().length() == 0){
-                    ivAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_avatar));
+                if(userData == null)
+                    return;
+
+                if(userData.getAvatar().equals(Constants.DEFAULT_AVATAR_URL)) {
+                    GlideApp.with(getContext()).load(R.drawable.default_avatar).placeholder(R.drawable.default_avatar).circleCrop().into(ivAvatar); //placeholder je nužan... for reasons
                     return;
                 }
 
                 new DownloadImageTask(new DownloadImageTask.Listener() {
                     @Override
                     public void onImageDownloaded(final Bitmap bitmap) {
-                        ivAvatar.setImageBitmap(bitmap);
+                         Glide.with(getActivity()).load(bitmap).placeholder(R.drawable.default_avatar).circleCrop().into(ivAvatar);
                     }
 
                     @Override
                     public void onImageDownloadError() {
-                        Log.d("Settings", "Neuspjesno skidanje slike");
+                        Log.d(TAG, getResources().getString(R.string.log_imageDLError));
                     }
                 }).execute(userData.getAvatar());
             }
@@ -143,11 +152,12 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         presenter.saveCurrentUserSettings(email, username);
     }
 
-    private void onSettingsChanged(boolean isSuccessful, String username){
-        tvUsername.setText(username.toUpperCase());
-
-        if(isSuccessful)
+    @Override
+    public void onSettingsChanged(boolean isSuccessful){
+        if(isSuccessful) {
             TastyToast.makeText(getActivity(), getResources().getString(R.string.settings_change_success), Toast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+            setTextViews();
+        }
         else
             TastyToast.makeText(getActivity(), getResources().getString(R.string.settings_change_failed), Toast.LENGTH_SHORT, TastyToast.ERROR).show();
     }
@@ -175,7 +185,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
                 String path = currFileURI.getPath();
                 presenter.uploadAvatarToFirestore(currFileURI);
 
-                ivAvatar.setImageURI(currFileURI);
+                Glide.with(getActivity()).load(currFileURI).placeholder(R.drawable.default_avatar).circleCrop().into(ivAvatar);
+               // ivAvatar.setImageURI(currFileURI);
             }
         }
     }

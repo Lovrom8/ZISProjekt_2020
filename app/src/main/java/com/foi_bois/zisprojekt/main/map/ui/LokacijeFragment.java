@@ -1,16 +1,12 @@
 package com.foi_bois.zisprojekt.main.map.ui;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.base.BaseFragment;
@@ -19,7 +15,6 @@ import com.foi_bois.zisprojekt.lib.Helper;
 import com.foi_bois.zisprojekt.lib.PermsHelper;
 import com.foi_bois.zisprojekt.main.map.LokacijePresenter;
 import com.foi_bois.zisprojekt.model.Location;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -34,9 +29,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -46,14 +38,15 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
     @Inject
     LokacijePresenter<LokacijeView> presenter;
 
+    private final String TAG = "Locations";
     private GoogleMap map;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Marker mojaPozicija, testMark1, testMark2;
+    private Marker myPosMarker;
+    private LatLng oldLocation;
     private LocationRequest mLocationRequest;
     private BazaHelper baza;
 
-    private long INTERVAL = 10 * 1000;
-    private long NAJBRZI_INTERVAL = 10 * 1000;
+    private final long INTERVAL = 5 * 1000;
+    private final long NAJBRZI_INTERVAL = 5 * 1000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
@@ -64,8 +57,8 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        oldLocation = new LatLng(0.0,0.0);
         presenter.attach(this);
-        baza = baza.getInstance();
 
         return inf;
     }
@@ -76,73 +69,40 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         super.onDestroy();
     }
 
-    private void naPromjeniLokacije(android.location.Location location) {
-        String msg = "Nova trenutna lokacija: " + location.getLatitude() + ","
-                + location.getLongitude();
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        if(mojaPozicija != null) { //JIC
-            mojaPozicija.setPosition(latLng);
-            baza.osvjeziMojuLokaciju(getActivity(), new Location(latLng));
-        }
-    }
-
-   public void onLocationsRecieved(){
-
-   }
-
-   private void loadOtherLocations(){
-       map.clear(); //optimizacija lvl 100 :)
-
-       baza.procitajPodatke(new BazaHelper.FirebaseCallback() {
-           @Override
-           public void onCallback( Map<String, Location> lokacije) {
-               String mojId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-               for(String id : baza.lokacije.keySet()){
-                   if(id.equals(mojId))
-                       continue;
-
-                   Location location = baza.lokacije.get(id);
-                   map.addMarker(new MarkerOptions()
-                           .position(new LatLng(location.getLat(), location.getLng())).title("test"));
-               }
-           }
-       });
-
-       addMyLocation();
-   }
-
-    private boolean checkLocationPerms() {
-       return PermsHelper.checkPerms(getActivity(), ACCESS_FINE_LOCATION);
-    }
-
-    private void createTestMarkers(boolean dodajOstale) {
-        LatLng yourPos = new LatLng(45.8150, 15.9819); //Zagreb
-        LatLng testPos = new LatLng(48.2082, 16.3738); //Beč
-        LatLng testPos2 = new LatLng(48.8566, 2.3522); //Paris
-
-        mojaPozicija = map.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .position(yourPos).title("Tvoja pozicija")); //stavi fancy boju za sebe D:
-        map.moveCamera(CameraUpdateFactory.newLatLng(yourPos));
-
-        if(!dodajOstale)
+    private void onLocationChanged(android.location.Location newLocation) {
+        if(oldLocation.latitude == newLocation.getLatitude() && oldLocation.longitude == newLocation.getLongitude() )
             return;
 
-        testMark1 = map.addMarker(new MarkerOptions()
-                .position(testPos).title("Druga pozicija"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(testPos));
+        String msg = getResources().getString(R.string.toast_new_location) + " : " +
+                newLocation.getLatitude() + " , " + newLocation.getLongitude();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 
-        testMark2 = map.addMarker(new MarkerOptions()
-                .position(testPos2).title("Treca pozicija"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(testPos2));
+        LatLng newPos = new LatLng(newLocation.getLatitude(), newLocation.getLongitude());
+        if(myPosMarker != null) { //JIC
+            myPosMarker.setPosition(newPos);
+
+            BazaHelper.getInstance().refreshMyLocation(new Location(newPos), new BazaHelper.FirebaseUserCallback() {
+                @Override
+                public void onCallback(boolean isSuccesful) {
+                    if(isSuccesful){
+                        Log.d(TAG, getResources().getString(R.string.log_locationSavingSuccess));
+                    }else{
+                        Log.d(TAG, getResources().getString(R.string.log_locationSavingFail));
+                    }
+                }
+            });
+        }
+
+        oldLocation = newPos;
     }
 
-    protected void startLocationUpdate() {
+    public void clearMap(){
+        map.clear();
+    }
+
+    private void startLocationUpdate() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(NAJBRZI_INTERVAL);
 
@@ -156,32 +116,44 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         LocationServices.getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
-                        naPromjeniLokacije(locationResult.getLastLocation());
+                        onLocationChanged(locationResult.getLastLocation());
                     }
                 },
                 Looper.myLooper());
     }
 
     @Override
-    public void addMyLocation(){
-        map.addMarker(new MarkerOptions()
+    public void addMyLocation(LatLng myPos){
+        myPosMarker = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .position(mojaPozicija.getPosition()).title("Tvoja pozicija"));
+                .position(myPos).title("Tvoja pozicija"));
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(myPos));
+    }
+
+    @Override
+    public void addPositionMarker(LatLng pos, String title){
+        map.addMarker(new MarkerOptions()
+                .position(pos).title(title));
     }
 
     private void setSettings() {
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                if(marker.equals(mojaPozicija)) //nema potrebe da racunamo udaljenost do nase pozicije
+            public boolean onMarkerClick(Marker marker) { //iz nekog razloga mora ovo bit bool
+                if(marker.equals(myPosMarker)) //nema potrebe da racunamo udaljenost do nase pozicije
                     return false;
 
-                marker.setTitle("Udaljenost " + Helper.calculateDistance(marker, mojaPozicija));
+                marker.setTitle("Udaljenost " + Helper.calculateDistance(marker, myPosMarker));
                 marker.showInfoWindow();
 
-                return true; //iz nekog razloga mora ovo bit bool
+                return true;
             }
         });
+    }
+
+    private boolean checkLocationPerms() {
+        return PermsHelper.checkPerms(getActivity(), ACCESS_FINE_LOCATION);
     }
 
     @Override
@@ -195,9 +167,9 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         setSettings();
 
         //if(BuildConfig.DEBUG) //ako smo u razvojnom modu
-        createTestMarkers(false);
+        //presenter.createTestMarkers(true);
 
         startLocationUpdate();
-       // loadOtherLocations();
+        presenter.loadOtherLocations(); //SREDI procitajPodatke() hvata onDataChange, tak da ovo samo jednom zovemo
     }
 }

@@ -1,23 +1,17 @@
 package com.foi_bois.zisprojekt.main.settings;
 
-import android.Manifest;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
-import com.foi_bois.zisprojekt.base.BaseView;
 import com.foi_bois.zisprojekt.base.CommonPresenter;
 import com.foi_bois.zisprojekt.firebase.BazaHelper;
-import com.foi_bois.zisprojekt.main.MainActivity;
 import com.foi_bois.zisprojekt.main.settings.ui.SettingsView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import javax.inject.Inject;
 
@@ -62,10 +56,15 @@ public class SettingsPresenterImpl<V extends SettingsView> extends CommonPresent
                     user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                           if(task.isSuccessful())
-                               getView().onAvatarUpload(true);
-                           else
-                               getView().onAvatarUpload(false);
+                              if(!task.isSuccessful())
+                                    return;
+
+                              BazaHelper.getInstance().setUsernameForUser(user, username, new BazaHelper.FirebaseUserCallback(){
+                                  @Override
+                                  public void onCallback(boolean isSuccesful) {
+                                        getView().onSettingsChanged(isSuccesful);
+                                  }
+                              });
                         }
                     });
             }

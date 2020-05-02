@@ -22,6 +22,9 @@ public class LoginPresenterImpl<V extends LoginView> extends CommonPresenter<V> 
 
     @Override
     public void logInWithEmailPass(String email, String password) {
+        if(email.length() == 0 || password.length() == 0)
+            return;
+
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

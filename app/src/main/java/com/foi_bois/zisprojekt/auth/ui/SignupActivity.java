@@ -52,7 +52,7 @@ public class SignupActivity extends DaggerAppCompatActivity implements SignupVie
             }
         });
 
-        tbUsername = (EditText)findViewById(R.id.editSignupEmail);
+        tbUsername = (EditText)findViewById(R.id.editSignupUsername);
         tbPass = (EditText)findViewById(R.id.editSignupPassword);
         tbConfirmPass = (EditText)findViewById(R.id.editConfirmPassword);
         tbEmail = (EditText)findViewById(R.id.editSignupEmail);
@@ -107,7 +107,7 @@ public class SignupActivity extends DaggerAppCompatActivity implements SignupVie
 
     @Override
     public void onConvertUser(int conversionResult, FirebaseUser user) {
-        //TODO: slozi da se ne ponavlja tu i u signupu
+        //TODO: slozi
 
     }
 }

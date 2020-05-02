@@ -1,10 +1,9 @@
 package com.foi_bois.zisprojekt.model;
 
-import java.util.Date;
-
 public class User {
     //private String id; sifra, i sve ostalo je u FirebaseUser!
-    private String avatar; //trebala base64 bit, sad je link na firestore
+    private String avatar; //trebala base64 bit, ipak je sad link na firestore
+    private String username;
     private Location location;
     private long locationUpdated; //ServerValue.TIMESTAMP daje u ms razliku od UNIX vremena
 
@@ -12,7 +11,8 @@ public class User {
 
     }
 
-    public User( String avatar, Location location, long locationUpdated){
+    public User( String username, String avatar, Location location, long locationUpdated){
+        this.username = username;
         this.avatar = avatar;
         this.location = location;
         this.locationUpdated = locationUpdated;
@@ -33,6 +33,10 @@ public class User {
     public long getLocationUpdated() { return locationUpdated; }
 
     public void setLocationUpdated(long locationUpdated) { this.locationUpdated = locationUpdated; }
+
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
 
     // public Date getLocationUpdated(){ return locationUpdated; }
 
