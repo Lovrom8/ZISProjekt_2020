@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.foi_bois.zisprojekt.R;
 import com.foi_bois.zisprojekt.base.BaseFragment;
 import com.foi_bois.zisprojekt.firebase.BazaHelper;
-import com.foi_bois.zisprojekt.lib.Helper;
+import com.foi_bois.zisprojekt.lib.Utils;
 import com.foi_bois.zisprojekt.lib.PermsHelper;
 import com.foi_bois.zisprojekt.main.map.LokacijePresenter;
 import com.foi_bois.zisprojekt.model.Location;
@@ -43,7 +43,6 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
     private Marker myPosMarker;
     private LatLng oldLocation;
     private LocationRequest mLocationRequest;
-    private BazaHelper baza;
 
     private final long INTERVAL = 5 * 1000;
     private final long NAJBRZI_INTERVAL = 5 * 1000;
@@ -69,13 +68,14 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         super.onDestroy();
     }
 
-    private void onLocationChanged(android.location.Location newLocation) {
+    private void onLocationChanged(android.location.Location newLocation, boolean showInfo) {
         if(oldLocation.latitude == newLocation.getLatitude() && oldLocation.longitude == newLocation.getLongitude() )
             return;
 
         String msg = getResources().getString(R.string.toast_new_location) + " : " +
                 newLocation.getLatitude() + " , " + newLocation.getLongitude();
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        if(showInfo)
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 
         LatLng newPos = new LatLng(newLocation.getLatitude(), newLocation.getLongitude());
         if(myPosMarker != null) { //JIC
@@ -116,7 +116,7 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         LocationServices.getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
-                        onLocationChanged(locationResult.getLastLocation());
+                        onLocationChanged(locationResult.getLastLocation(), false);
                     }
                 },
                 Looper.myLooper());
@@ -132,9 +132,9 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
     }
 
     @Override
-    public void addPositionMarker(LatLng pos, String title){
+    public void addPositionMarker(LatLng pos, String username){
         map.addMarker(new MarkerOptions()
-                .position(pos).title(title));
+                .position(pos).title(username));
     }
 
     private void setSettings() {
@@ -144,7 +144,9 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
                 if(marker.equals(myPosMarker)) //nema potrebe da racunamo udaljenost do nase pozicije
                     return false;
 
-                marker.setTitle("Udaljenost " + Helper.calculateDistance(marker, myPosMarker));
+                marker.setSnippet(getString(R.string.dist_title) + " : "
+                        + Utils.calculateDistance(marker, myPosMarker) + " " +
+                        getString(R.string.dist_unit));
                 marker.showInfoWindow();
 
                 return true;

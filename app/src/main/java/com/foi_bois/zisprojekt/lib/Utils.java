@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.Marker;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-public class Helper {
+public class Utils {
     public static float calculateDistance(Marker A, Marker B){
         if(A == null || B == null) //JIC
             return -1.0f;
