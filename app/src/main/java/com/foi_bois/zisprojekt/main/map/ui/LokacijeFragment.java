@@ -45,7 +45,7 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
     private LocationRequest mLocationRequest;
 
     private final long INTERVAL = 5 * 1000;
-    private final long NAJBRZI_INTERVAL = 5 * 1000;
+    private final long FASTEST_INTERVAL = 5 * 1000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class LokacijeFragment extends BaseFragment implements LokacijeView, OnMa
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setInterval(INTERVAL);
-        mLocationRequest.setFastestInterval(NAJBRZI_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);

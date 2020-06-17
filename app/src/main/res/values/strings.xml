@@ -33,7 +33,7 @@
     <string name="login_anon_failed">Neuspješna anonimna prijava</string>
     <string name="login_anon_success">Dobrodosli tko god da jeste</string>
     <string name="login_success">Dobrodosli: </string>
-    <string name="login_failed">Pepehands</string>
+    <string name="login_failed">Neuspjesna prijava!</string>
     <string name="login_already_logged">Vec ste prijavljeni!</string>
     <string name="login_db_fail">Neuspjesno dohvacanje podataka…</string>
     <string name="login_missing">Nesto fali!</string>

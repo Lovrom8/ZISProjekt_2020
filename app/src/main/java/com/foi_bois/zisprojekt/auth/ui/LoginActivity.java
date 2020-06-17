@@ -47,7 +47,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        checkIfRememberMeEnabled(); //TODO: mozda napraviti nekakav intro screen da se uopće ne vidi ovaj ak već postoje credsi
+        checkIfRememberMeEnabled();
 
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener( new View.OnClickListener(){

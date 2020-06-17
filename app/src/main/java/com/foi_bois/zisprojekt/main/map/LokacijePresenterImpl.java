@@ -19,28 +19,28 @@ public class LokacijePresenterImpl<V extends LokacijeView> extends CommonPresent
 
     @Override
     public void loadOtherLocations() {
-        final BazaHelper baza = BazaHelper.getInstance();
+        final BazaHelper db = BazaHelper.getInstance();
+        final long maxDiff = 60 * 1000;
 
-        baza.readAllUserData(new BazaHelper.FirebaseAllUserCallback() {
+        db.readAllUserData(new BazaHelper.FirebaseAllUserCallback() {
             @Override
             public void onCallback(HashMap<String, User> userDataList) {
                 getView().clearMap();
 
                 String mojId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+                long unixTime = System.currentTimeMillis() / 1000;
+
                 for(String id : userDataList.keySet()){
                     User userData = userDataList.get(id);
 
-                    if(id.equals(mojId)) {
+                    if(id.equals(mojId))
                         getView().addMyLocation(userData.getLocation().getLatLng());
-                        continue;
-                    }
-
-                    getView().addPositionMarker(userData.getLocation().getLatLng(), userData.getUsername());
+                     else if (unixTime - userData.getLocationUpdated() <= maxDiff )
+                         getView().addPositionMarker(userData.getLocation().getLatLng(), userData.getUsername());
                 }
             }
         });
-
     }
 
     @Override

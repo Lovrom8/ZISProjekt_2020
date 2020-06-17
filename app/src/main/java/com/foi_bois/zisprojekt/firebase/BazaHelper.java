@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
@@ -116,12 +117,17 @@ public class BazaHelper  {
         refreshLocationForUser(FirebaseAuth.getInstance().getCurrentUser(), location, callback);
     }
 
-    public void refreshLocationForUser(FirebaseUser user, Location location, final FirebaseUserCallback callback){
+    public void refreshLocationForUser(final FirebaseUser user, Location location, final FirebaseUserCallback callback){
         dbUserRef.child(user.getUid()).child("location").setValue(location)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        callback.onCallback(task.isSuccessful());
+                        dbUserRef.child(user.getUid()).child("locationUpdated").setValue(ServerValue.TIMESTAMP).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                callback.onCallback(task.isSuccessful());
+                            }
+                        });
                     }
                 });
     }
